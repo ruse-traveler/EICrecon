@@ -4,6 +4,7 @@
 #ifndef EICRECON_TRACKCLUSTERMERGESPLITTER_H
 #define EICRECON_TRACKCLUSTERMERGESPLITTER_H
 
+#include <string>
 #include <utility>
 #include <algorithm>
 #include <algorithms/algorithm.h>
@@ -44,7 +45,7 @@ namespace eicrecon {
     public:
 
       // ctor
-      TrackClusterMergeSplitter(std::strig_view name) :
+      TrackClusterMergeSplitter(std::string_view name) :
         TrackClusterMergeSplitterAlgorithm {
           name,
           {"InputClusterCollection", "InputTrackProjections"},

@@ -10,7 +10,7 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   //! Initialize algorithm
   // --------------------------------------------------------------------------
-  void TrackClusterMergeSplitterAlgorithm::init() {
+  void TrackClusterMergeSplitter::init() {
 
     /* TODO fill in */
 
