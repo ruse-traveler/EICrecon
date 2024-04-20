@@ -7,9 +7,9 @@ namespace eicrecon {
 
   struct TrackClusterMergeSplitterConfig {
 
-    double minSigCut = -1.;   // min significance
-    double avgEP     = 0.50;  // mean E/p
-    double sigEP     = 1.0;   // rms of E/p
+    double minSigCut = -1.;  // min significance
+    double avgEP     = 1.0;  // mean E/p
+    double sigEP     = 1.0;  // rms of E/p
 
   };  // end TrackClusterMergeSplitterConfig
 
