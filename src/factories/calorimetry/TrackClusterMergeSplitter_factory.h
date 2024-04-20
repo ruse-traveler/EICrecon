@@ -12,10 +12,13 @@ namespace eicrecon {
 
   class TrackClusterMergeSplitter_factory : public JOmniFactory<TrackClusterMergeSplitter_factory, TrackClusterMergeSplitterConfig> {
 
+    public:
+
+      using AlgoT = eicrecon::TrackClusterMergeSplitter;
+
     private:
 
       // algorithm to run
-      using AlgoT = eicrecon::TrackClusterMergeSplitter;
       std::unique_ptr<AlgoT> m_algo;
 
       // input collections
@@ -36,8 +39,8 @@ namespace eicrecon {
 
     public:
 
-      void Configuire() {
-        m_algo = std::make_unique<AlgoT>();
+      void Configure() {
+        m_algo = std::make_unique<AlgoT>(GetPrefix());
         m_algo -> applyConfig( config() );
         m_algo -> init();
       }
@@ -46,10 +49,10 @@ namespace eicrecon {
         /* nothing to do here */
       }
 
-      void Proces(int64_t run_number, int64_t event_number) {
+      void Process(int64_t run_number, uint64_t event_number) {
         m_algo -> process(
-          {m_cluster_input(), m_track_projections_input()},
-          {m_cluster_output().get()}
+          {m_clusters_input(), m_track_projections_input()},
+          {m_clusters_output().get()}
         );
       }
 
