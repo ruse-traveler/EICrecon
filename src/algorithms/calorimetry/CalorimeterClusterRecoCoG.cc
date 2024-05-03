@@ -78,7 +78,7 @@ namespace eicrecon {
       // If mcHits are available, associate cluster with MCParticle
       // 1. find proto-cluster hit with largest energy deposition
       // 2. find first mchit with same CellID
-      // 3. assign mchit's MCParticle as cluster truth
+      // 3. assign mchit's highest energy contributing MCParticle as cluster truth
       if (mchits->size() > 0) {
 
         // 1. find pclhit with largest energy deposition
@@ -121,8 +121,28 @@ namespace eicrecon {
           break;
         }
 
-        // 3. find mchit's MCParticle
-        const auto& mcp = mchit->getContributions(0).getParticle();
+        // 3. find mchit's highest energy MCParticle
+        double eConSum = 0.;
+        double eConMax = 0.;
+        uint32_t iMaxPar = 0;
+        for (uint32_t iContrib = 0; const auto& contrib : mchit->getContributions()) {
+
+          // skip if same contributor
+          if (mchit->getContributions(iMaxPar).getParticle().getObjectID() == contrib.getParticle().getObjectID()) continue;
+
+          // increment sum, exit if current max > remaining energy
+          eConSum += contrib.getEnergy() / m_cfg.sampFrac;
+          eConMax = mchit->getContributions(iMaxPar).getEnergy() / m_cfg.sampFrac;
+          if (eConMax >= (mchit->getEnergy() - eConSum)) break;
+
+          // if contribution is bigger than max, update
+          if (contrib.getEnergy() > eConMax) {
+            eConMax = contrib.getEnergy();
+            iMaxPar = iContrib;
+          }
+          ++iContrib;
+        }
+        const auto& mcp = mchit->getContributions(iMaxPar).getParticle();
 
         debug("cluster has largest energy in cellID: {}", pclhit->getCellID());
         debug("pcl hit with highest energy {} at index {}", pclhit->getEnergy(), pclhit->getObjectID().index);
