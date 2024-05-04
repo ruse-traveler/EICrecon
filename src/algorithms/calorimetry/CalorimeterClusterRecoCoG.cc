@@ -271,9 +271,9 @@ std::optional<edm4eic::MutableMCRecoClusterParticleAssociation> CalorimeterClust
   // 4. associate cluster to that MCParticle
   edm4eic::MutableMCRecoClusterParticleAssociation assoc;
 
-  // create book-keeping containers
-  std::vector<std::pair<int, double>>   m_vecSimHitIndexVsEne;
-  std::map<int, std::pair<int, double>> m_mapMCIndexToContrib;
+  // make sure book-keeping containers are empty
+  m_vecSimHitIndexVsEne.clear();
+  m_mapMCIndexToContrib.clear();
 
   // 1. get associated sim hits and sum energy
   double eSimHitSum = 0.;
