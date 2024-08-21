@@ -9,7 +9,7 @@ namespace eicrecon {
 
   struct SiPMWaveformGeneratorConfig {
 
-    /* TODO fill in */
+    size_t nSamples = 112;
 
   };  // end SiPMWaveformGeneratorConfig
 

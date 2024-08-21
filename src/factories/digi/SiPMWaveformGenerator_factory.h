@@ -32,6 +32,9 @@ namespace eicrecon {
       // output collections
       PodioOutput<edm4hep::RawTimeSeries> m_rawtimeseries_output {this};
 
+      // parameters
+      ParameterRef<size_t> m_nSamples {this, "nSamples", config().nSamples};
+
       // services
       Service<AlgorithmsInit_service> m_algoInitSvc {this};
 
