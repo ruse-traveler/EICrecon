@@ -282,6 +282,7 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
             "HcalBarrelRecHits",
             "HcalBarrelClusters",
             "HcalBarrelClusterAssociations",
+            "HcalBarrelRawWaveforms",
             "B0ECalRawHits",
             "B0ECalRecHits",
             "B0ECalClusters",
