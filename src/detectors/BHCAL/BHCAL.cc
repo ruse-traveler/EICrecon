@@ -14,6 +14,9 @@
 #include "factories/calorimetry/CalorimeterIslandCluster_factory.h"
 #include "factories/calorimetry/CalorimeterTruthClustering_factory.h"
 
+// HGCROC digitization prototype
+#include "factories/digi/SiPMWaveformGenerator_factory.h"
+
 extern "C" {
 
     void InitPlugin(JApplication *app) {
@@ -123,6 +126,22 @@ extern "C" {
               .sampFrac = 1.0,
               .logWeightBase = 6.2,
               .enableEtaBounds = false
+            },
+            app   // TODO: Remove me once fixed
+          )
+        );
+
+        // ====================================================================
+        // HGCROC Digitization Prototype
+        // ====================================================================
+
+        app->Add(
+          new JOmniFactoryGeneratorT<SiPMWaveformGenerator_factory>(
+            "HcalBarrelRawWaveforms",
+            {"HcalBarrelHits"},          // edm4hep::SimCalorimeterHitCollection
+            {"HcalBarrelRawWaveforms"},  // edm4hep::RawTimeSeries
+            {
+              .nSamples = 112
             },
             app   // TODO: Remove me once fixed
           )
