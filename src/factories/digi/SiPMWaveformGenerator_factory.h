@@ -6,7 +6,7 @@
 // eicrecon components
 #include "extensions/jana/JOmniFactory.h"
 #include "services/algorithms_init/AlgorithmsInit_service.h"
-#include "algorithms/calorimetry/SiPMWaveformGenerator.h"
+#include "algorithms/digi/SiPMWaveformGenerator.h"
 
 namespace eicrecon {
 
