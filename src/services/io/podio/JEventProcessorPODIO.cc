@@ -282,7 +282,12 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
             "HcalBarrelRecHits",
             "HcalBarrelClusters",
             "HcalBarrelClusterAssociations",
+            // ================================================================
+            // HGCROC Digitization Prototype
+            // ================================================================
             "HcalBarrelRawWaveforms",
+            "HcalBarrelRawHGCROCHits",
+            // ================================================================
             "B0ECalRawHits",
             "B0ECalRecHits",
             "B0ECalClusters",

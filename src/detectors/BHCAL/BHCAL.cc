@@ -15,7 +15,10 @@
 #include "factories/calorimetry/CalorimeterTruthClustering_factory.h"
 
 // HGCROC digitization prototype
+#include "algorithms/digi/SiPMWaveformGeneratorConfig.h"
+#include "algorithms/digi/HGCROCHitDigiConfig.h"
 #include "factories/digi/SiPMWaveformGenerator_factory.h"
+#include "factories/digi/HGCROCHitDigi_factory.h"
 
 extern "C" {
 
@@ -135,6 +138,9 @@ extern "C" {
         // HGCROC Digitization Prototype
         // ====================================================================
 
+        // --------------------------------------------------------------------
+        //! Step 1: generate simulated waveforms
+        // --------------------------------------------------------------------
         app->Add(
           new JOmniFactoryGeneratorT<SiPMWaveformGenerator_factory>(
             "HcalBarrelRawWaveforms",
@@ -142,6 +148,21 @@ extern "C" {
             {"HcalBarrelRawWaveforms"},  // edm4hep::RawTimeSeries
             {
               .nSamples = 112
+            },
+            app   // TODO: Remove me once fixed
+          )
+        );
+
+        // --------------------------------------------------------------------
+        //! Step 2: digitize simulated waveforms into HGCROC hits
+        // --------------------------------------------------------------------
+        app->Add(
+          new JOmniFactoryGeneratorT<HGCROCHitDigi_factory>(
+            "HcalBarrelRawHGCROCHits",
+            {"HcalBarrelRawWaveforms"},   // edm4hep::RawTimeSeries
+            {"HcalBarrelRawHGCROCHits"},  // edm4eic::RawHGCROCHit
+            {
+              /* TODO fill in */
             },
             app   // TODO: Remove me once fixed
           )
