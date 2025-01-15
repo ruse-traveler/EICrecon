@@ -8,6 +8,7 @@
 
 #include "extensions/jana/JOmniFactoryGeneratorT.h"
 #include "factories/particle/TrackClusterMergeSplitter_factory.h"
+#include "factories/particle/TrackClusterSubtraction_factory.h"
 
 extern "C" {
 
