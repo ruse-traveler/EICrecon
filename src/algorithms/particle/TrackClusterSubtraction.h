@@ -6,6 +6,7 @@
 #include <DD4hep/Detector.h>
 #include <algorithms/algorithm.h>
 #include <edm4eic/ClusterCollection.h>
+#include <edm4eic/TrackClusterMatchCollection.h>
 #include <edm4eic/TrackPoint.h>
 #include <edm4eic/TrackSegmentCollection.h>
 #include <edm4hep/Vector3f.h>
@@ -17,7 +18,7 @@
 #include <string_view>
 #include <vector>
 
-// for algorithm configuration
+#include "PFTools.h"
 #include "TrackClusterSubtractionConfig.h"
 #include "algorithms/interfaces/WithPodConfig.h"
 
@@ -31,12 +32,12 @@ namespace eicrecon {
   using TrackClusterSubtractionAlgorithm = algorithms::Algorithm<
     algorithms::Input<
       edm4eic::ClusterCollection,
-      edm4eic::ClusterCollection,
+      edm4eic::TrackClusterMatchCollection,
       edm4eic::TrackSegmentCollection
     >,
     algorithms::Output<
       edm4eic::ClusterCollection,
-      edm4eic::ClusterCollection
+      edm4eic::TrackClusterMatchCollection
     >
   >;
 
@@ -45,9 +46,9 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   //! Track-Cluster Subtraction
   // --------------------------------------------------------------------------
-  /*! An algorithm which takes collections of EM and HCal clusters, matches
-   *  track projections, subtracts the sum of the energy the projections
-   *  to the clusters, and returns the remnants of the subtracted clusters.
+  /*! An algorithm which takes a collection of clusters and their matched
+   *  tracks, subtracts the sum of all tracks pointing to the cluster,
+   *  and outputs the remnant cluster and their matched tracks.  
    */
   class TrackClusterSubtraction :
     public TrackClusterSubtractionAlgorithm,
@@ -60,12 +61,8 @@ namespace eicrecon {
       TrackClusterSubtraction(std::string_view name) :
         TrackClusterSubtractionAlgorithm {
           name,
-          {
-            "InputEMCalClusterCollection",
-            "InputHCalClusterCollection",
-            "InputTrackProjections"
-          },
-          {"OutputClusterCollection"},
+          {"InputClusterCollection", "InputTrackClusterMatches", "InputTrackProjections"},
+          {"OutputClusterCollection", "OutputTrackClusterMatches"},
           "Subtracts energy of tracks pointing to clusters."
         } {}
 

@@ -162,7 +162,86 @@ extern "C" {
         // PFA (1a) arbitration: apply track correction to clusters
         // --------------------------------------------------------------------
 
-        /* TODO add here */
+        // backward -----------------------------------------------------------
+
+        app->Add(
+          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+            "EcalEndcapNSubtractedClusters",
+            {"EcalEndcapNSplitMergeClusters",
+             "EcalEndcapNTrackSplitMergeClusterMatches",
+             "CalorimeterTrackProjections"},
+            {"EcalEndcapNSubtractedClusters",
+             "EcalEndcapNTrackSubtractedClusterMatches"},
+            {
+              .fracEnergyToSub = 1.0
+            },
+            app  // TODO: remove me once fixed
+          )
+        );
+
+        app->Add(
+          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+            "HcalEndcapNSubtractedClusters",
+            {"HcalEndcapNSplitMergeClusters",
+             "HcalEndcapNTrackSplitMergeClusterMatches",
+             "CalorimeterTrackProjections"},
+            {"HcalEndcapNSubtractedClusters",
+             "HcalEndcapNTrackSubtractedClusterMatches"},
+            {
+              .fracEnergyToSub = 1.0
+            },
+            app  // TODO: remove me once fixed
+          )
+        );
+
+        // central ------------------------------------------------------------
+
+        app->Add(
+          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+            "HcalBarrelSubtractedClusters",
+            {"HcalBarrelSplitMergeClusters",
+             "HcalBarrelTrackSplitMergeClusterMatches",
+             "CalorimeterTrackProjections"},
+            {"HcalBarrelSubtractedClusters",
+             "HcalBarrelTrackSubtractedClusterMatches"},
+            {
+              .fracEnergyToSub = 1.0
+            },
+            app  // TODO: remove me once fixed
+          )
+        );
+
+        // forward ------------------------------------------------------------
+
+        app->Add(
+          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+            "EcalEndcapPSubtractedClusters",
+            {"EcalEndcapPSplitMergeClusters",
+             "EcalEndcapPTrackSplitMergeClusterMatches",
+             "CalorimeterTrackProjections"},
+            {"EcalEndcapPSubtractedClusters",
+             "EcalEndcapPTrackSubtractedClusterMatches"},
+            {
+              .fracEnergyToSub = 1.0
+            },
+            app  // TODO: remove me once fixed
+          )
+        );
+
+        app->Add(
+          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+            "LFHCALSubtractedClusters",
+            {"LFHCALSplitMergeClusters",
+             "LFHCALTrackSplitMergeClusterMatches",
+             "CalorimeterTrackProjections"},
+            {"LFHCALSubtractedClusters",
+             "LFHCALTrackSubtractedClusterMatches"},
+            {
+              .fracEnergyToSub = 1.0
+            },
+            app  // TODO: remove me once fixed
+          )
+        );
 
         // --------------------------------------------------------------------
         // PFA (1b) arbitration: form charged candidates

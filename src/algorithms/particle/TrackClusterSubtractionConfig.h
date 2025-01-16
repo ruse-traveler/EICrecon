@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
-// Copyright (C) 2024 Derek Anderson
+// Copyright (C) 2025 Derek Anderson
 
 #pragma once
 
@@ -9,14 +9,11 @@ namespace eicrecon {
 
   struct TrackClusterSubtractionConfig {
 
-    std::string idCalo = "HcalBarrel_ID";  // id of calorimeter to match projections to
+    // FIXME might not be needed
+    std::string idCalo = "HcalBarrel_ID";  // id of calorimeter to match to
 
-    /* TODO parameters will go here */
-
-    // scale for hit-track distance
-    double transverseEnergyProfileScale = 1.0;
+    double fracEnergyToSub = 1.0;  // fraction of energy to subtract
 
   };  // end TrackClusterSubtractionConfig
 
 }  // end eicrecon namespace
-

@@ -27,16 +27,17 @@ namespace eicrecon {
       std::unique_ptr<AlgoT> m_algo;
 
       // input collections
-      PodioInput<edm4eic::Cluster> m_emclusters_input {this};
-      PodioInput<edm4eic::Cluster> m_hclusters_input {this};
+      PodioInput<edm4eic::Cluster> m_clusters_input {this};
+      PodioInput<edm4eic::TrackClusterMatch> m_track_cluster_match_input {this};
       PodioInput<edm4eic::TrackSegment> m_track_projections_input {this};
 
       // output collections
-      PodioOutput<edm4eic::Cluster> m_emclusters_output {this};
-      PodioOutput<edm4eic::Cluster> m_hclusters_output {this};
+      PodioOutput<edm4eic::Cluster> m_clusters_output {this};
+      PodioOutput<edm4eic::TrackClusterMatch> m_track_cluster_match_output {this};
 
       // parameter bindings
-      /* TODO fill in */
+      ParameterRef<std::string> m_idCalo {this, "idCalo", config().idCalo};
+      ParameterRef<double> m_fracEnergyToSub {this, "fracEnergyToSub", config().fracEnergyToSub};
 
       // services
       Service<DD4hep_service> m_geoSvc {this};
@@ -56,8 +57,8 @@ namespace eicrecon {
 
       void Process(int64_t run_number, uint64_t event_number) {
         m_algo->process(
-          {m_emclusters_input(), m_hclusters_input(), m_track_projections_input()},
-          {m_emclusters_output().get(), m_hclusters_output().get()}
+          {m_clusters_input(), m_track_cluster_match_input(), m_track_projections_input()},
+          {m_clusters_output().get(), m_track_cluster_match_output().get()}
         );
       }
 
