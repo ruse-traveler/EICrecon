@@ -12,9 +12,8 @@
 #include <cstddef>
 #include <gsl/pointers>
 
-// algorithm definition
 #include "TrackClusterMergeSplitter.h"
-#include "algorithms/calorimetry/TrackClusterMergeSplitterConfig.h"
+#include "algorithms/particle/TrackClusterMergeSplitterConfig.h"
 
 
 
@@ -81,15 +80,15 @@ namespace eicrecon {
     // ------------------------------------------------------------------------
     // 1. Identify projections to calorimeter
     // ------------------------------------------------------------------------
-    VecTrk  vecTrack;
-    VecProj vecProject;
+    PFTools::VecTrk  vecTrack;
+    PFTools::VecProj vecProject;
     get_projections(in_projections, vecProject, vecTrack);
 
     // ------------------------------------------------------------------------
     // 2. Match relevant projections to clusters
     // ------------------------------------------------------------------------
-    MapToVecTrk  mapTrkToMatch;
-    MapToVecProj mapProjToSplit;
+    PFTools::MapToVecTrk  mapTrkToMatch;
+    PFTools::MapToVecProj mapProjToSplit;
     if (vecProject.size() == 0) {
       debug("No projections to match clusters to.");
       return;
@@ -100,8 +99,8 @@ namespace eicrecon {
     // ------------------------------------------------------------------------
     // 3. Loop over projection-cluster pairs to check if merging is needed
     // ------------------------------------------------------------------------
-    SetClust setUsedClust;
-    MapToVecClust mapClustToMerge;
+    PFTools::SetClust setUsedClust;
+    PFTools::MapToVecClust mapClustToMerge;
     for (auto& [clustSeed, vecMatchProj] : mapProjToSplit) {
 
       // at this point, track-cluster matches are 1-to-1
@@ -254,8 +253,8 @@ namespace eicrecon {
    */
   void TrackClusterMergeSplitter::get_projections(
     const edm4eic::TrackSegmentCollection* projections,
-    VecProj& relevant_projects,
-    VecTrk& relevant_trks
+    PFTools::VecProj& relevant_projects,
+    PFTools::VecTrk& relevant_trks
   ) const {
 
     // return if projections are empty
@@ -279,7 +278,7 @@ namespace eicrecon {
     }  // end projection loop
     debug("Collected relevant projections: {} to process", relevant_projects.size());
 
-  }  // end 'get_projections(edm4eic::CalorimeterHit&, edm4eic::TrackSegmentCollection&, VecTrkPoint&)'
+  }  // end 'get_projections(edm4eic::CalorimeterHit&, edm4eic::TrackSegmentCollection&, PFTools::VecProj&, PFTools::VecTrk&)'
 
 
 
@@ -290,10 +289,10 @@ namespace eicrecon {
    */
   void TrackClusterMergeSplitter::match_clusters_to_tracks(
     const edm4eic::ClusterCollection* clusters,
-    const VecProj& projections,
-    const VecTrk& tracks,
-    MapToVecProj& matched_projects,
-    MapToVecTrk& matched_tracks
+    const PFTools::VecProj& projections,
+    const PFTools::VecTrk& tracks,
+    PFTools::MapToVecProj& matched_projects,
+    PFTools::MapToVecTrk& matched_tracks
   ) const {
 
 
@@ -342,7 +341,7 @@ namespace eicrecon {
     }  // end projection loop
     debug("Finished matching clusters to track projections: {} matches", matched_projects.size());
 
-  }  // end 'match_clusters_to_tracks(edm4eic::ClusterCollection*, VecProj&, VecTrk&, MapToVecProj&, MapToVecTrk&)'
+  }  // end 'match_clusters_to_tracks(edm4eic::ClusterCollection*, PFTools::VecProj&, PFTools::VecTrk&, PFTools::MapToVecProj&, PFTools::MapToVecTrk&)'
 
 
 
@@ -354,8 +353,8 @@ namespace eicrecon {
    *  and the track's momentum.
    */
   void TrackClusterMergeSplitter::merge_and_split_clusters(
-    const VecClust& to_merge,
-    const VecProj& to_split,
+    const PFTools::VecClust& to_merge,
+    const PFTools::VecProj& to_split,
     std::vector<edm4eic::MutableCluster>& new_clusters
   ) const {
 
@@ -370,7 +369,7 @@ namespace eicrecon {
     }
 
     // calculate weights for splitting
-    VecMatrix weights(to_split.size(), MatrixF(to_merge.size()));
+    PFTools::VecMatrixF weights(to_split.size(), PFTools::MatrixF(to_merge.size()));
     for (std::size_t iClust = 0; const auto& old_clust : to_merge) {
 
       // set aside enough space for each hit
@@ -404,10 +403,10 @@ namespace eicrecon {
 
         // normalize weights over all projections
         float wTotal = 0.;
-        for (const MatrixF& matrix : weights) {
+        for (const PFTools::MatrixF& matrix : weights) {
           wTotal += matrix[iClust][iHit];
         }
-        for (MatrixF& matrix : weights) {
+        for (PFTools::MatrixF& matrix : weights) {
           matrix[iClust][iHit] /= wTotal;
         }
         ++iHit;
@@ -429,9 +428,9 @@ namespace eicrecon {
   //! Make new cluster out of old ones
   // --------------------------------------------------------------------------
   void TrackClusterMergeSplitter::make_cluster(
-    const VecClust& old_clusts,
+    const PFTools::VecClust& old_clusts,
     edm4eic::MutableCluster& new_clust,
-    std::optional<MatrixF> split_weights
+    std::optional<PFTools::MatrixF> split_weights
   ) const {
 
     // determine total no. of hits

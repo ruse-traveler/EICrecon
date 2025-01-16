@@ -12,9 +12,9 @@
 #include <cstddef>
 #include <gsl/pointers>
 
-// algorithm definition
+#include "PFTools.h"
 #include "TrackClusterSubtraction.h"
-#include "algorithms/calorimetry/TrackClusterSubtractionConfig.h"
+#include "algorithms/particle/TrackClusterSubtractionConfig.h"
 
 
 

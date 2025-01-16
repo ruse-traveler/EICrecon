@@ -11,7 +11,7 @@
 #include "extensions/jana/JOmniFactory.h"
 #include "services/geometry/dd4hep/DD4hep_service.h"
 #include "services/algorithms_init/AlgorithmsInit_service.h"
-#include "algorithms/calorimetry/TrackClusterSubtraction.h"
+#include "algorithms/particle/TrackClusterSubtraction.h"
 
 namespace eicrecon {
 
