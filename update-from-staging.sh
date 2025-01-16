@@ -9,3 +9,4 @@ cp -rv ../development/ForParticleFlow/mark2/new/global/particle/ ./src/global/
 cp -v ../development/ForParticleFlow/mark2/new/algorithms/CMakeLists.txt ./src/algorithms/
 cp -v ../development/ForParticleFlow/mark2/new/factories/CMakeLists.txt ./src/factories/
 cp -v ../development/ForParticleFlow/mark2/new/global/CMakeLists.txt ./src/global/
+cp -v ../development/ForParticleFlow/mark2/new/services/JEventProcessorPODIO.cc ./src/services/io/podio/
