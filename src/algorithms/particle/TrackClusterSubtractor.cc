@@ -92,6 +92,7 @@ namespace eicrecon {
     debug("Built map of clusters-onto-tracks, size = {}", mapClustToProj.size());
 
     // lambda to sum momenta of matched tracks
+    //   - FIXME should account for mass somehow...
     auto sumMomenta = [](const PFTools::VecProj& projects) {
       double sum = 0.;
       for (const auto& project : projects) {
@@ -101,17 +102,34 @@ namespace eicrecon {
     };
 
     // ------------------------------------------------------------------------
-    // 2. Do subtraction
+    // 2. Subtract energy for tracks
     // ------------------------------------------------------------------------ 
-    /* TODO will go here */
+    // FIXME need to think: for charged particles, energy reconstruction
+    // should use only the portion of energy relevant to the charged
+    // track if there is something leftover after subtraction...
+    for (const auto& [cluster, projects] : mapClustToProj) {
 
-    /* TODO
-     *   - sum momentum
-     *   - subtract
-     *   - write output
-     *     - remnant clusters
-     *     - remnant-track matches
-     */
+      // do subtraction
+      const double eTrk = sumMomenta(projects);
+      const double eToSub = m_cfg.fracEnergyToSub * eTrk;
+      const double eSub = cluster.getEnergy() - eSub;
+      trace("Subtracted {} GeV from cluster with {} GeV", eToSub, cluster.getEnergy());
+
+      // if greater than 0, scale energy accordingly and
+      // write out remnant cluster
+      if (eSub <= 0.0) {
+        continue;
+      }
+      const double scale = eSub / cluster.getEnergy();
+
+      // update cluster energy
+      edm4eic::MutableCluster remnant_clust = cluster.clone();
+      remnant_clust.setEnergy( scale * cluster.getEnergy() );
+      out_clusters->push_back(remnant_clust);
+      trace("Create remnant cluster with {} GeV", remnant_clust.getEnergy());
+
+    }  // end cluster-to-projections loop
+    debug("Finished subtraction, {} clusters leftover", out_clusters->size());
 
   }  // end 'get_projections(edm4eic::CalorimeterHit&, edm4eic::TrackSegmentCollection&, VecTrkPoint&)'
 
