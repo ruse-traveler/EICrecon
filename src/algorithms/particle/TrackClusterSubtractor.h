@@ -19,7 +19,7 @@
 #include <vector>
 
 #include "PFTools.h"
-#include "TrackClusterSubtractionConfig.h"
+#include "TrackClusterSubtractorConfig.h"
 #include "algorithms/interfaces/WithPodConfig.h"
 
 
@@ -29,7 +29,7 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   //! Algorithm input/output
   // --------------------------------------------------------------------------
-  using TrackClusterSubtractionAlgorithm = algorithms::Algorithm<
+  using TrackClusterSubtractorAlgorithm = algorithms::Algorithm<
     algorithms::Input<
       edm4eic::ClusterCollection,
       edm4eic::TrackClusterMatchCollection,
@@ -50,16 +50,16 @@ namespace eicrecon {
    *  tracks, subtracts the sum of all tracks pointing to the cluster,
    *  and outputs the remnant cluster and their matched tracks.  
    */
-  class TrackClusterSubtraction :
-    public TrackClusterSubtractionAlgorithm,
-    public WithPodConfig<TrackClusterSubtractionConfig>
+  class TrackClusterSubtractor :
+    public TrackClusterSubtractorAlgorithm,
+    public WithPodConfig<TrackClusterSubtractorConfig>
   {
 
     public:
 
       // ctor
-      TrackClusterSubtraction(std::string_view name) :
-        TrackClusterSubtractionAlgorithm {
+      TrackClusterSubtractor(std::string_view name) :
+        TrackClusterSubtractorAlgorithm {
           name,
           {"InputClusterCollection", "InputTrackClusterMatches", "InputTrackProjections"},
           {"OutputClusterCollection", "OutputTrackClusterMatches"},
@@ -78,6 +78,6 @@ namespace eicrecon {
       // calorimeter id
       int m_idCalo {0};
 
-  };  // end TrackClusterSubtraction
+  };  // end TrackClusterSubtractor
 
 }  // end eicrecon namespace

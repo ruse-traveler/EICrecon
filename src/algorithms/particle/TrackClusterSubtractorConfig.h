@@ -7,13 +7,13 @@
 
 namespace eicrecon {
 
-  struct TrackClusterSubtractionConfig {
+  struct TrackClusterSubtractorConfig {
 
     // FIXME might not be needed
     std::string idCalo = "HcalBarrel_ID";  // id of calorimeter to match to
 
     double fracEnergyToSub = 1.0;  // fraction of energy to subtract
 
-  };  // end TrackClusterSubtractionConfig
+  };  // end TrackClusterSubtractorConfig
 
 }  // end eicrecon namespace

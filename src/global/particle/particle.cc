@@ -8,7 +8,7 @@
 
 #include "extensions/jana/JOmniFactoryGeneratorT.h"
 #include "factories/particle/TrackClusterMergeSplitter_factory.h"
-#include "factories/particle/TrackClusterSubtraction_factory.h"
+#include "factories/particle/TrackClusterSubtractor_factory.h"
 
 extern "C" {
 
@@ -165,7 +165,7 @@ extern "C" {
         // backward -----------------------------------------------------------
 
         app->Add(
-          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+          new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "EcalEndcapNSubtractedClusters",
             {"EcalEndcapNSplitMergeClusters",
              "EcalEndcapNTrackSplitMergeClusterMatches",
@@ -180,7 +180,7 @@ extern "C" {
         );
 
         app->Add(
-          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+          new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "HcalEndcapNSubtractedClusters",
             {"HcalEndcapNSplitMergeClusters",
              "HcalEndcapNTrackSplitMergeClusterMatches",
@@ -197,7 +197,7 @@ extern "C" {
         // central ------------------------------------------------------------
 
         app->Add(
-          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+          new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "HcalBarrelSubtractedClusters",
             {"HcalBarrelSplitMergeClusters",
              "HcalBarrelTrackSplitMergeClusterMatches",
@@ -214,7 +214,7 @@ extern "C" {
         // forward ------------------------------------------------------------
 
         app->Add(
-          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+          new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "EcalEndcapPSubtractedClusters",
             {"EcalEndcapPSplitMergeClusters",
              "EcalEndcapPTrackSplitMergeClusterMatches",
@@ -229,7 +229,7 @@ extern "C" {
         );
 
         app->Add(
-          new JOmniFactoryGeneratorT<TrackClusterSubtraction_factory>(
+          new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "LFHCALSubtractedClusters",
             {"LFHCALSplitMergeClusters",
              "LFHCALTrackSplitMergeClusterMatches",

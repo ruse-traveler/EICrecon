@@ -12,8 +12,8 @@
 #include <cstddef>
 #include <gsl/pointers>
 
-#include "TrackClusterSubtraction.h"
-#include "algorithms/particle/TrackClusterSubtractionConfig.h"
+#include "TrackClusterSubtractor.h"
+#include "algorithms/particle/TrackClusterSubtractorConfig.h"
 
 
 
@@ -22,7 +22,7 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   //! Initialize algorithm
   // --------------------------------------------------------------------------
-  void TrackClusterSubtraction::init(const dd4hep::Detector* detector) {
+  void TrackClusterSubtractor::init(const dd4hep::Detector* detector) {
 
     // grab detector id
     m_idCalo = detector -> constant<int>(m_cfg.idCalo);
@@ -37,9 +37,9 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   /*! Subtract energy of matched tracks
    */
-  void TrackClusterSubtraction::process(
-    const TrackClusterSubtraction::Input& input,
-    const TrackClusterSubtraction::Output& output
+  void TrackClusterSubtractor::process(
+    const TrackClusterSubtractor::Input& input,
+    const TrackClusterSubtractor::Output& output
   ) const {
 
     // grab inputs/outputs

@@ -11,15 +11,15 @@
 #include "extensions/jana/JOmniFactory.h"
 #include "services/geometry/dd4hep/DD4hep_service.h"
 #include "services/algorithms_init/AlgorithmsInit_service.h"
-#include "algorithms/particle/TrackClusterSubtraction.h"
+#include "algorithms/particle/TrackClusterSubtractor.h"
 
 namespace eicrecon {
 
-  class TrackClusterSubtraction_factory : public JOmniFactory<TrackClusterSubtraction_factory, TrackClusterSubtractionConfig> {
+  class TrackClusterSubtractor_factory : public JOmniFactory<TrackClusterSubtractor_factory, TrackClusterSubtractorConfig> {
 
     public:
 
-      using AlgoT = eicrecon::TrackClusterSubtraction;
+      using AlgoT = eicrecon::TrackClusterSubtractor;
 
     private:
 
@@ -62,6 +62,6 @@ namespace eicrecon {
         );
       }
 
-  };  // end TrackClusterSubtraction_factory
+  };  // end TrackClusterSubtractor_factory
 
 }  // end eicrecon namespace
