@@ -31,7 +31,6 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   using TrackClusterSubtractorAlgorithm = algorithms::Algorithm<
     algorithms::Input<
-      edm4eic::ClusterCollection,
       edm4eic::TrackClusterMatchCollection,
       edm4eic::TrackSegmentCollection
     >,
@@ -50,9 +49,9 @@ namespace eicrecon {
    *  tracks, subtracts the sum of all tracks pointing to the cluster,
    *  and outputs the remnant cluster and their matched tracks.  
    */
-  class TrackClusterSubtractor :
-    public TrackClusterSubtractorAlgorithm,
-    public WithPodConfig<TrackClusterSubtractorConfig>
+  class TrackClusterSubtractor
+    : public TrackClusterSubtractorAlgorithm
+    , public WithPodConfig<TrackClusterSubtractorConfig>
   {
 
     public:
@@ -61,22 +60,19 @@ namespace eicrecon {
       TrackClusterSubtractor(std::string_view name) :
         TrackClusterSubtractorAlgorithm {
           name,
-          {"InputClusterCollection", "InputTrackClusterMatches", "InputTrackProjections"},
+          {"InputTrackClusterMatches", "InputTrackProjections"},
           {"OutputClusterCollection", "OutputTrackClusterMatches"},
           "Subtracts energy of tracks pointing to clusters."
         } {}
 
       // public methods
-      void init(const dd4hep::Detector* detector);
+      void init();
       void process (const Input&, const Output&) const final;
 
     private:
 
       // private methods
       /* TODO fill in */
-
-      // calorimeter id
-      int m_idCalo {0};
 
   };  // end TrackClusterSubtractor
 

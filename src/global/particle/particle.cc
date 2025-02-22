@@ -167,12 +167,12 @@ extern "C" {
         app->Add(
           new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "EcalEndcapNSubtractedClusters",
-            {"EcalEndcapNSplitMergeClusters",
-             "EcalEndcapNTrackSplitMergeClusterMatches",
+            {"EcalEndcapNTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"EcalEndcapNSubtractedClusters",
              "EcalEndcapNTrackSubtractedClusterMatches"},
             {
+              .surfaceToUse = 1,
               .fracEnergyToSub = 1.0
             },
             app  // TODO: remove me once fixed
@@ -182,12 +182,12 @@ extern "C" {
         app->Add(
           new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "HcalEndcapNSubtractedClusters",
-            {"HcalEndcapNSplitMergeClusters",
-             "HcalEndcapNTrackSplitMergeClusterMatches",
+            {"HcalEndcapNTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"HcalEndcapNSubtractedClusters",
              "HcalEndcapNTrackSubtractedClusterMatches"},
             {
+              .surfaceToUse = 1,
               .fracEnergyToSub = 1.0
             },
             app  // TODO: remove me once fixed
@@ -199,12 +199,12 @@ extern "C" {
         app->Add(
           new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "HcalBarrelSubtractedClusters",
-            {"HcalBarrelSplitMergeClusters",
-             "HcalBarrelTrackSplitMergeClusterMatches",
+            {"HcalBarrelTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"HcalBarrelSubtractedClusters",
              "HcalBarrelTrackSubtractedClusterMatches"},
             {
+              .surfaceToUse = 1,
               .fracEnergyToSub = 1.0
             },
             app  // TODO: remove me once fixed
@@ -216,12 +216,12 @@ extern "C" {
         app->Add(
           new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "EcalEndcapPSubtractedClusters",
-            {"EcalEndcapPSplitMergeClusters",
-             "EcalEndcapPTrackSplitMergeClusterMatches",
+            {"EcalEndcapPTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"EcalEndcapPSubtractedClusters",
              "EcalEndcapPTrackSubtractedClusterMatches"},
             {
+              .surfaceToUse = 1,
               .fracEnergyToSub = 1.0
             },
             app  // TODO: remove me once fixed
@@ -231,12 +231,12 @@ extern "C" {
         app->Add(
           new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
             "LFHCALSubtractedClusters",
-            {"LFHCALSplitMergeClusters",
-             "LFHCALTrackSplitMergeClusterMatches",
+            {"LFHCALTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"LFHCALSubtractedClusters",
              "LFHCALTrackSubtractedClusterMatches"},
             {
+              .surfaceToUse = 1,
               .fracEnergyToSub = 1.0
             },
             app  // TODO: remove me once fixed

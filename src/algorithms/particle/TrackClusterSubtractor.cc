@@ -22,11 +22,9 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   //! Initialize algorithm
   // --------------------------------------------------------------------------
-  void TrackClusterSubtractor::init(const dd4hep::Detector* detector) {
+  void TrackClusterSubtractor::init() {
 
-    // grab detector id
-    m_idCalo = detector -> constant<int>(m_cfg.idCalo);
-    debug("Collecting projections to detector with system id {}", m_idCalo);
+    //... nothing to do ...//
 
   }  // end 'init(dd4hep::Detector*)'
 
@@ -35,7 +33,14 @@ namespace eicrecon {
   // --------------------------------------------------------------------------
   //! Process inputs
   // --------------------------------------------------------------------------
-  /*! Subtract energy of matched tracks
+  /*! Subtract energy of matched tracks via the following algorithm.
+   *    1. Build a map of each cluster onto a list of matched
+   *       track projections.
+   *    2. For each cluster, subtract the sum of momenta of
+   *       all matched tracks scaled by the specified fraction
+   *       from the cluster's energy.
+   *    3. If subtracted energy is greater than 0, copy cluster
+   *       into output with new subtracted energy.
    */
   void TrackClusterSubtractor::process(
     const TrackClusterSubtractor::Input& input,
@@ -43,14 +48,8 @@ namespace eicrecon {
   ) const {
 
     // grab inputs/outputs
-    const auto [in_clusters, in_matches, in_projections] = input;
+    const auto [in_matches, in_projections] = input;
     auto [out_clusters, out_matches] = output;
-
-    // exit if no clusters in collection
-    if (in_clusters->size() == 0) {
-      debug("No clusters in input collection.");
-      return;
-    }
 
     // exit if no matched tracks in collection
     if (in_matches->size() == 0) {
@@ -58,9 +57,55 @@ namespace eicrecon {
       return;
     }
 
+    // ------------------------------------------------------------------------
+    // 1. Build map of clusters onto projections
+    // ------------------------------------------------------------------------
+    PFTools::MapToVecProj mapClustToProj;
+    for (const auto& match : *in_matches) {
+      for (const auto& project : *in_projections) {
+
+        // pick out corresponding projection from track
+        if (match.getTrack() != project.getTrack()) {
+          continue;
+        }
+
+        // locate relevant point to measure momentum
+        bool foundPoint = false;
+        for (const auto& point : project.getPoints()) {
+
+          // pick out surface specified in configuration
+          if (point.surface != m_cfg.surfaceToUse) {
+            continue;
+          }        
+
+          // add to map and break 
+          mapClustToProj[ match.getCluster() ].push_back(point);
+          break;
+        }
+
+        // break if needed
+        if (foundPoint) {
+          break;
+        }
+      }  // end projection loop
+    }  // end track-cluster match loop
+    debug("Built map of clusters-onto-tracks, size = {}", mapClustToProj.size());
+
+    // lambda to sum momenta of matched tracks
+    auto sumMomenta = [](const PFTools::VecProj& projects) {
+      double sum = 0.;
+      for (const auto& project : projects) {
+        sum += edm4hep::utils::magnitude( project.momentum );
+      }
+      return sum;
+    };
+
+    // ------------------------------------------------------------------------
+    // 2. Do subtraction
+    // ------------------------------------------------------------------------ 
+    /* TODO will go here */
+
     /* TODO
-     *   - build map of cluster onto tracks
-     *   - grab associated track point of each track
      *   - sum momentum
      *   - subtract
      *   - write output
