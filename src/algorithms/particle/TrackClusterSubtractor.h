@@ -73,6 +73,7 @@ namespace eicrecon {
 
       // private methods
       double sum_track_energy(const PFTools::VecSeg& projects) const;
+      bool is_zero(const double difference) const;
 
       // services
       const algorithms::ParticleSvc& m_parSvc = algorithms::ParticleSvc::instance();
