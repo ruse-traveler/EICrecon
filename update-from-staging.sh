@@ -10,3 +10,4 @@ cp -v ../development/ForParticleFlow/mark2/new/algorithms/CMakeLists.txt ./src/a
 cp -v ../development/ForParticleFlow/mark2/new/factories/CMakeLists.txt ./src/factories/
 cp -v ../development/ForParticleFlow/mark2/new/global/CMakeLists.txt ./src/global/
 cp -v ../development/ForParticleFlow/mark2/new/services/JEventProcessorPODIO.cc ./src/services/io/podio/
+cp -v ../development/ForParticleFlow/mark2/new/utilities/eicrecon.cc ./src/utilities/eicrecon/
