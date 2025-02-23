@@ -170,10 +170,12 @@ extern "C" {
             {"EcalEndcapNTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"EcalEndcapNSubtractedClusters",
+             "EcalEndcapNRemnantClusters",
              "EcalEndcapNTrackSubtractedClusterMatches"},
             {
+              .fracEnergyToSub = 1.0,
+              .defaultMassPdg = 211,
               .surfaceToUse = 1,
-              .fracEnergyToSub = 1.0
             },
             app  // TODO: remove me once fixed
           )
@@ -185,10 +187,12 @@ extern "C" {
             {"HcalEndcapNTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"HcalEndcapNSubtractedClusters",
+             "HcalEndcapNRemnantClusters",
              "HcalEndcapNTrackSubtractedClusterMatches"},
             {
-              .surfaceToUse = 1,
-              .fracEnergyToSub = 1.0
+              .fracEnergyToSub = 1.0,
+              .defaultMassPdg = 211,
+              .surfaceToUse = 1
             },
             app  // TODO: remove me once fixed
           )
@@ -202,6 +206,7 @@ extern "C" {
             {"HcalBarrelTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"HcalBarrelSubtractedClusters",
+             "HcalBarrelRemnantClusters",
              "HcalBarrelTrackSubtractedClusterMatches"},
             {
               .fracEnergyToSub = 1.0,
@@ -220,6 +225,7 @@ extern "C" {
             {"EcalEndcapPTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"EcalEndcapPSubtractedClusters",
+             "EcalEndcapPRemnantClusters",
              "EcalEndcapPTrackSubtractedClusterMatches"},
             {
               .fracEnergyToSub = 1.0,
@@ -236,6 +242,7 @@ extern "C" {
             {"LFHCALTrackSplitMergeClusterMatches",
              "CalorimeterTrackProjections"},
             {"LFHCALSubtractedClusters",
+             "LFHCALRemnantClusters",
              "LFHCALTrackSubtractedClusterMatches"},
             {
               .fracEnergyToSub = 1.0,
