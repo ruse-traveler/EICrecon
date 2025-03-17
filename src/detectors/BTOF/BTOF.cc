@@ -29,12 +29,12 @@ void InitPlugin(JApplication *app) {
 
     // Digitization
     app->Add(new JOmniFactoryGeneratorT<SiliconTrackerDigi_factory>(
-        "TOFBarrelRawHit",
+        "TOFBarrelRawHits",
         {
           "TOFBarrelHits"
         },
         {
-          "TOFBarrelRawHit",
+          "TOFBarrelRawHits",
           "TOFBarrelRawHitAssociations"
         },
         {
@@ -46,9 +46,9 @@ void InitPlugin(JApplication *app) {
 
     // Convert raw digitized hits into hits with geometry info (ready for tracking)
     app->Add(new JOmniFactoryGeneratorT<TrackerHitReconstruction_factory>(
-        "TOFBarrelRecHit",
-        {"TOFBarrelRawHit"},    // Input data collection tags
-        {"TOFBarrelRecHit"},     // Output data tag
+        "TOFBarrelRecHits",
+        {"TOFBarrelRawHits"},    // Input data collection tags
+        {"TOFBarrelRecHits"},     // Output data tag
         {
             .timeResolution = 10,
         },
@@ -75,6 +75,21 @@ void InitPlugin(JApplication *app) {
     };
 
     app->Add(new JOmniFactoryGeneratorT<PIDLookup_factory>(
+          "CombinedTOFTruthSeededLUTPID",
+          {
+          "ReconstructedTruthSeededChargedWithPFRICHPIDParticles",
+          "ReconstructedTruthSeededChargedWithPFRICHPIDParticleAssociations",
+          },
+          {
+          "ReconstructedTruthSeededChargedWithPFRICHTOFPIDParticles",
+          "ReconstructedTruthSeededChargedWithPFRICHTOFPIDParticleAssociations",
+          "CombinedTOFTruthSeededParticleIDs",
+          },
+          pid_cfg,
+          app
+          ));
+
+    app->Add(new JOmniFactoryGeneratorT<PIDLookup_factory>(
           "CombinedTOFLUTPID",
           {
           "ReconstructedChargedWithPFRICHPIDParticles",
@@ -84,21 +99,6 @@ void InitPlugin(JApplication *app) {
           "ReconstructedChargedWithPFRICHTOFPIDParticles",
           "ReconstructedChargedWithPFRICHTOFPIDParticleAssociations",
           "CombinedTOFParticleIDs",
-          },
-          pid_cfg,
-          app
-          ));
-
-    app->Add(new JOmniFactoryGeneratorT<PIDLookup_factory>(
-          "CombinedTOFSeededLUTPID",
-          {
-          "ReconstructedSeededChargedWithPFRICHPIDParticles",
-          "ReconstructedSeededChargedWithPFRICHPIDParticleAssociations",
-          },
-          {
-          "ReconstructedSeededChargedWithPFRICHTOFPIDParticles",
-          "ReconstructedSeededChargedWithPFRICHTOFPIDParticleAssociations",
-          "CombinedTOFSeededParticleIDs",
           },
           pid_cfg,
           app

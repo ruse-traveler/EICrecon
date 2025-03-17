@@ -19,7 +19,7 @@ namespace eicrecon {
     float zMax = 1700. * Acts::UnitConstants::mm; // max z to look for hits to compose seeds
     float zMin = -1500. * Acts::UnitConstants::mm; // min z to look for hits to compose seeds
     float deltaRMinTopSP     = 10. * Acts::UnitConstants::mm; // Min distance in r between middle and top SP in one seed
-    float deltaRMaxTopSP     = 200. * Acts::UnitConstants::mm; // Max distance in r between middle and top SP in one seed
+    float deltaRMaxTopSP     = 450. * Acts::UnitConstants::mm; // Max distance in r between middle and top SP in one seed
     float deltaRMinBottomSP  = 10. * Acts::UnitConstants::mm; // Min distance in r between middle and bottom SP in one seed
     float deltaRMaxBottomSP  = 200. * Acts::UnitConstants::mm; // Max distance in r between middle and bottom SP in one seed
     float collisionRegionMin = -250 * Acts::UnitConstants::mm; // Min z for primary vertex
@@ -37,6 +37,8 @@ namespace eicrecon {
     float impactMax        = 3. * Acts::UnitConstants::mm; // Maximum transverse PCA allowed
     float rMinMiddle       = 20. * Acts::UnitConstants::mm; // Middle spacepoint must fall between these two radii
     float rMaxMiddle       = 400. * Acts::UnitConstants::mm;
+
+    float deltaPhiMax      = 0.085; // Max difference in phi between middle and either top or bottom sp
 
     //////////////////////////////////////////////////////////////////////////
     /// SEED FILTER GENERAL PARAMETERS
