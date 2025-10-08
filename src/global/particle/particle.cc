@@ -9,10 +9,6 @@
 
 #include "extensions/jana/JOmniFactoryGeneratorT.h"
 
-#if EDM4EIC_VERSION_MAJOR >= 8
-#include "factories/particle/TrackClusterSubtractor_factory.h"
-#endif
-
 extern "C" {
 
 void InitPlugin(JApplication* app) {
@@ -20,6 +16,8 @@ void InitPlugin(JApplication* app) {
   using namespace eicrecon;
 
   InitJANAPlugin(app);
+
+  /* TODO move track-cluster matching here when ready */
 
   // ====================================================================
   // PFAlpha: baseline PF implementation
@@ -37,81 +35,53 @@ void InitPlugin(JApplication* app) {
 
   // backward -----------------------------------------------------------
 
-#if EDM4EIC_VERSION_MAJOR >= 8
-  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
-      "EcalEndcapNSubtractedClusters",
-      {"EcalEndcapNTrackClusterMatches", "EcalEndcapNClusters", "CalorimeterTrackProjections"},
-      {"EcalEndcapNRemnantClusters", "EcalEndcapNExpectedClusters",
-       "EcalEndcapNTrackExpectedClusterMatches"},
-      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
-      app // TODO: remove me once fixed
-      ));
-
-  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
-      "HcalEndcapNSubtractedClusters",
-      {"HcalEndcapNTrackClusterMatches", "HcalEndcapNClusters", "CalorimeterTrackProjections"},
-      {"HcalEndcapNRemnantClusters", "HcalEndcapNExpectedClusters",
-       "HcalEndcapNTrackExpectedClusterMatches"},
-      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
-      app // TODO: remove me once fixed
-      ));
+  /* TODO add PFA1(a) EEEMCal here */
+  /* TODO add PFA1(a) EHCal here */
 
   // central ------------------------------------------------------------
 
-  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
-      "EcalBarrelSubtractedClusters",
-      {"EcalBarrelTrackClusterMatches", "EcalBarrelClusters", "CalorimeterTrackProjections"},
-      {"EcalBarrelRemnantClusters", "EcalBarrelExpectedClusters",
-       "EcalBarrelTrackExpectedClusterMatches"},
-      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
-      app // TODO: remove me once fixed
-      ));
-
-  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
-      "HcalBarrelSubtractedClusters",
-      {"HcalBarrelTrackClusterMatches", "HcalBarrelClusters", "CalorimeterTrackProjections"},
-      {"HcalBarrelRemnantClusters", "HcalBarrelExpectedClusters",
-       "HcalBarrelTrackExpectedClusterMatches"},
-      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
-      app // TODO: remove me once fixed
-      ));
+  /* TODO add PFA1(a) BEMC here */
+  /* TODO add PFA1(a) BHCal here */
 
   // forward ------------------------------------------------------------
 
-  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
-      "EcalEndcapPSubtractedClusters",
-      {"EcalEndcapPTrackClusterMatches", "EcalEndcapPClusters", "CalorimeterTrackProjections"},
-      {"EcalEndcapPRemnantClusters", "EcalEndcapPExpectedClusters",
-       "EcalEndcapPTrackExpectedClusterMatches"},
-      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
-      app // TODO: remove me once fixed
-      ));
-
-  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
-      "LFHCALSubtractedClusters",
-      {"LFHCALTrackSplitMergeClusterMatches", "LFHCALClusters", "CalorimeterTrackProjections"},
-      {"LFHCALRemnantClusters", "LFHCALExpectedClusters", "LFHCALTrackExpectedClusterMatches"},
-      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
-      app // TODO: remove me once fixed
-      ));
-#endif
+  /* TODO add PFA1(a) FEMC here */
+  /* TODO add PFA1(a) LFHCAL here */
+  /* TODO add PFA1(a) FHCal insert here */
 
   // --------------------------------------------------------------------
   // PFA (1b) arbitration: form charged candidates
   // --------------------------------------------------------------------
 
-  /* TODO add here */
+  /* TODO collect expected clusters + matched tracks here */
+  /* TODO add PFA1(b) here */
 
   // --------------------------------------------------------------------
   // PFA (2) arbitration: combine remnants, form neutral candidates
   // --------------------------------------------------------------------
 
-  /* TODO add here */
+  // backward -----------------------------------------------------------
+
+  /* TODO add PFA2 EEEMCal here */
+  /* TODO add PFA2 EHCal here */
+
+  // central ------------------------------------------------------------
+
+  /* TODO add PFA2 BEMC here */
+  /* TODO add PFA2 BHCal here */
+
+  // forward ------------------------------------------------------------
+
+  /* TODO add PFA2 FEMC here */
+  /* TODO add PFA2 LFHCAL here */
+  /* TODO add PFA2 FHCal insert here */
 
   // --------------------------------------------------------------------
   // PFA (3) regression: convert candidates to reco particles
   // --------------------------------------------------------------------
 
-  /* TODO add here */
+  /* TODO collect charged + neutral candidates here */
+  /* TODO add PFA3 here */
+
 }
 } // extern "C"
