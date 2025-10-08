@@ -9,6 +9,10 @@
 
 #include "extensions/jana/JOmniFactoryGeneratorT.h"
 
+#if EDM4EIC_VERSION_MAJOR >= 8
+#include "factories/particle/TrackClusterSubtractor_factory.h"
+#endif
+
 extern "C" {
 
 void InitPlugin(JApplication* app) {
@@ -35,19 +39,71 @@ void InitPlugin(JApplication* app) {
 
   // backward -----------------------------------------------------------
 
-  /* TODO add PFA1(a) EEEMCal here */
-  /* TODO add PFA1(a) EHCal here */
+#if EDM4EIC_VERSION_MAJOR >= 8
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "EcalEndcapNRemnantClusters",
+      {"EcalEndcapNTrackClusterMatches", "EcalEndcapNClusters", "CalorimeterTrackProjections"},
+      {"EcalEndcapNRemnantClusters", "EcalEndcapNExpectedClusters",
+       "EcalEndcapNTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "HcalEndcapNRemnantClusters",
+      {"HcalEndcapNTrackClusterMatches", "HcalEndcapNClusters", "CalorimeterTrackProjections"},
+      {"HcalEndcapNRemnantClusters", "HcalEndcapNExpectedClusters",
+       "HcalEndcapNTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
 
   // central ------------------------------------------------------------
 
-  /* TODO add PFA1(a) BEMC here */
-  /* TODO add PFA1(a) BHCal here */
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "EcalBarrelRemnantClusters",
+      {"EcalBarrelTrackClusterMatches", "EcalBarrelClusters", "CalorimeterTrackProjections"},
+      {"EcalBarrelRemnantClusters", "EcalBarrelExpectedClusters",
+       "EcalBarrelTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "HcalBarrelRemnantClusters",
+      {"HcalBarrelTrackClusterMatches", "HcalBarrelClusters", "CalorimeterTrackProjections"},
+      {"HcalBarrelRemnantClusters", "HcalBarrelExpectedClusters",
+       "HcalBarrelTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
 
   // forward ------------------------------------------------------------
 
-  /* TODO add PFA1(a) FEMC here */
-  /* TODO add PFA1(a) LFHCAL here */
-  /* TODO add PFA1(a) FHCal insert here */
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "EcalEndcapPRemnantClusters",
+      {"EcalEndcapPTrackClusterMatches", "EcalEndcapPClusters", "CalorimeterTrackProjections"},
+      {"EcalEndcapPRemnantClusters", "EcalEndcapPExpectedClusters",
+       "EcalEndcapPTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "LFHCALRemnantClusters",
+      {"LFHCALTrackSplitMergeClusterMatches", "LFHCALClusters", "CalorimeterTrackProjections"},
+      {"LFHCALRemnantClusters", "LFHCALExpectedClusters", "LFHCALTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackClusterSubtractor_factory>(
+      "HcalEndcapPInsertRemnantClusters",
+      {"HcalEndcapPInsertTrackSplitMergeClusterMatches", "HcalEndcapPInsertClusters", "CalorimeterTrackProjections"},
+      {"HcalEndcapPInsertRemnantClusters", "HcalEndcapPInsertExpectedClusters", "HcalEndcapPInsertTrackExpectedClusterMatches"},
+      {.fracEnergyToSub = 1.0, .defaultMassPdg = 211, .surfaceToUse = 1},
+      app // TODO: remove me once fixed
+      ));
 
   // --------------------------------------------------------------------
   // PFA (1b) arbitration: form charged candidates
