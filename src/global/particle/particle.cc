@@ -53,8 +53,21 @@ void InitPlugin(JApplication* app) {
   // PFA (1b) arbitration: form charged candidates
   // --------------------------------------------------------------------
 
-  /* TODO collect expected clusters + matched tracks here */
-  /* TODO add PFA1(b) here */
+  // backward -----------------------------------------------------------
+
+  /* TODO add PFA1(b) EEEMCal here */
+  /* TODO add PFA1(b) EHCal here */
+
+  // central ------------------------------------------------------------
+
+  /* TODO add PFA1(b) BEMC here */
+  /* TODO add PFA1(b) BHCal here */
+
+  // forward ------------------------------------------------------------
+
+  /* TODO add PFA1(b) FEMC here */
+  /* TODO add PFA1(b) LFHCAL here */
+  /* TODO add PFA1(b) FHCal insert here */
 
   // --------------------------------------------------------------------
   // PFA (2) arbitration: combine remnants, form neutral candidates
@@ -80,8 +93,23 @@ void InitPlugin(JApplication* app) {
   // PFA (3) regression: convert candidates to reco particles
   // --------------------------------------------------------------------
 
-  /* TODO collect charged + neutral candidates here */
-  /* TODO add PFA3 here */
+  // backward -----------------------------------------------------------
+
+  /* TODO add PFA3 EEEMCal here */
+  /* TODO add PFA3 EHCal here */
+
+  // central ------------------------------------------------------------
+
+  /* TODO add PFA3 BEMC here */
+  /* TODO add PFA3 BHCal here */
+
+  // forward ------------------------------------------------------------
+
+  /* TODO add PFA3 FEMC here */
+  /* TODO add PFA3 LFHCAL here */
+  /* TODO add PFA3 FHCal insert here */
+
+  /* TODO collect reconstructed particles here */
 
 }
 } // extern "C"
