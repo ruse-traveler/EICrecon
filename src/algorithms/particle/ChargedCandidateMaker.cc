@@ -40,6 +40,24 @@ void ChargedCandidateMaker::process(const ChargedCandidateMaker::Input& input,
     return;
   }
 
+  // --------------------------------------------------------------------------
+  // 1. Build map of tracks onto matched clusters
+  // --------------------------------------------------------------------------
+  MapToVecClust mapTrkToClust;
+  for (const auto& match : *in_match) {
+    mapTrkToClust[match.getTrack()].push_back(match.getCluster());
+  }
+
+  // --------------------------------------------------------------------------
+  // 2. Create a reconstructed particle for each track
+  // --------------------------------------------------------------------------
+  for (const auto& [track, clusters] : mapTrkToClust) {
+    edm4eic::MutableReconstructedParticle particle = out_particle->create();
+    particle.addToTracks(track);
+    for (const edm4eic::Cluster& cluster : clusters) {
+      particle.addToClusters(cluster);
+    }
+  }
 } // end 'process(Input&, Output&)'
 } // namespace eicrecon
 
