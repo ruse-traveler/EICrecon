@@ -124,6 +124,7 @@ void InitPlugin(JApplication* app) {
   /* TODO add PFA1(b) FEMC here */
   /* TODO add PFA1(b) LFHCAL here */
   /* TODO add PFA1(b) FHCal insert here */
+#endif
 
   // --------------------------------------------------------------------
   // PFA (2) arbitration: combine remnants, form neutral candidates

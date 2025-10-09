@@ -16,7 +16,6 @@
 #include <string_view>
 #include <vector>
 
-#include "ChargedCandidateMakerConfig.h"
 #include "algorithms/interfaces/WithPodConfig.h"
 
 #if EDM4EIC_VERSION_MAJOR >= 8

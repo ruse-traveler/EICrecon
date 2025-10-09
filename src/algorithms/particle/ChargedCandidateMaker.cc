@@ -13,7 +13,6 @@
 #if EDM4EIC_VERSION_MAJOR >= 8
 
 #include "ChargedCandidateMaker.h"
-#include "algorithms/particle/ChargedCandidateMakerConfig.h"
 
 namespace eicrecon {
 
@@ -29,7 +28,7 @@ namespace eicrecon {
  *       filled
  */
 void ChargedCandidateMaker::process(const ChargedCandidateMaker::Input& input,
-                                     const ChargedCandidateMaker::Output& output) const {
+                                    const ChargedCandidateMaker::Output& output) const {
 
   // grab inputs/outputs
   const auto [in_match] = input;
