@@ -8,8 +8,10 @@
 #include <vector>
 
 #include "extensions/jana/JOmniFactoryGeneratorT.h"
+#include "factories/meta/CollectionCollector_factory.h"
 
 #if EDM4EIC_VERSION_MAJOR >= 8
+#include "factories/particle/ChargedCandidateMaker_factory.h"
 #include "factories/particle/TrackClusterSubtractor_factory.h"
 #endif
 
@@ -111,19 +113,53 @@ void InitPlugin(JApplication* app) {
 
   // backward -----------------------------------------------------------
 
-  /* TODO add PFA1(b) EEEMCal here */
-  /* TODO add PFA1(b) EHCal here */
+  app->Add(new JOmniFactoryGeneratorT<CollectionCollector_factory<edm4eic::TrackClusterMatch, false>>(
+      "EndcapNTrackExpectedClusterMatches",
+      {"EcalEndcapNTrackExpectedClusterMatches", "HcalEndcapNTrackExpectedClusterMatches"},
+      {"EndcapNTrackExpectedClusterMatches"}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<ChargedCandidateMaker_factory>(
+      "EndcapNChargedCandidateParticlesAlpha",
+      {"EndcapNTrackExpectedClusterMatches"},
+      {"EndcapNChargedCandidateParticlesAlpha"},
+      {}, app));
 
   // central ------------------------------------------------------------
 
-  /* TODO add PFA1(b) BEMC here */
-  /* TODO add PFA1(b) BHCal here */
+  app->Add(new JOmniFactoryGeneratorT<CollectionCollector_factory<edm4eic::TrackClusterMatch, false>>(
+      "BarrelTrackExpectedClusterMatches",
+      {"EcalBarrelTrackExpectedClusterMatches", "HcalBarrelTrackExpectedClusterMatches"},
+      {"BarrelTrackExpectedClusterMatches"}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<ChargedCandidateMaker_factory>(
+      "BarrelChargedCandidateParticlesAlpha",
+      {"BarrelTrackExpectedClusterMatches"},
+      {"BarrelChargedCandidateParticlesAlpha"},
+      {}, app));
 
   // forward ------------------------------------------------------------
 
-  /* TODO add PFA1(b) FEMC here */
-  /* TODO add PFA1(b) LFHCAL here */
-  /* TODO add PFA1(b) FHCal insert here */
+  app->Add(new JOmniFactoryGeneratorT<CollectionCollector_factory<edm4eic::TrackClusterMatch, false>>(
+      "EndcapPTrackExpectedClusterMatches",
+      {"EcalEndcapPTrackExpectedClusterMatches", "LFHCALTrackExpectedClusterMatches"},
+      {"EndcapPTrackExpectedClusterMatches"}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<ChargedCandidateMaker_factory>(
+      "EndcapPChargedCandidateParticlesAlpha",
+      {"EndcapPTrackExpectedClusterMatches"},
+      {"EndcapPChargedCandidateParticlesAlpha"},
+      {}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<CollectionCollector_factory<edm4eic::TrackClusterMatch, false>>(
+      "EndcapPInsertTrackExpectedClusterMatches",
+      {"EcalEndcapPTrackExpectedClusterMatches", "HcalEndcapPInsertTrackExpectedClusterMatches"},
+      {"EndcapPInsertTrackExpectedClusterMatches"}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<ChargedCandidateMaker_factory>(
+      "EndcapPInsertChargedCandidateParticlesAlpha",
+      {"EndcapPInsertTrackExpectedClusterMatches"},
+      {"EndcapPInsertChargedCandidateParticlesAlpha"},
+      {}, app));
 #endif
 
   // --------------------------------------------------------------------
