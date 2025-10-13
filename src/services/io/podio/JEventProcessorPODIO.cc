@@ -388,6 +388,7 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
 
       // particle flow
       /* TODO move PFA0 collections here when ready */
+
       "EcalBarrelRemnantClusters",
       "EcalBarrelExpectedClusters",
       "EcalBarrelTrackExpectedClusterMatches",
@@ -409,6 +410,12 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
       "HcalEndcapPInsertRemnantClusters",
       "HcalEndcapPInsertExpectedClusters",
       "HcalEndcapPInsertTrackExpectedClusterMatches",
+
+      "EndcapNChargedCandidateParticlesAlpha",
+      "BarrelChargedCandidateParticlesAlpha",
+      "EndcapPChargedCandidateParticlesAlpha",
+      "EndcapPInsertChargedCandidateParticlesAlpha",
+
       /* TODO add PFA2 collections here */
       /* TODO add PFA3 collections here */
   };
