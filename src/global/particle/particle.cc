@@ -20,9 +20,17 @@ void InitPlugin(JApplication* app) {
 
   InitJANAPlugin(app);
 
+  /* TODO move track-cluster matching here when ready */
+
   // ====================================================================
   // PFAlpha: baseline PF implementation
   // ====================================================================
+
+  // --------------------------------------------------------------------
+  // PFA (0) connection: split/merge clusters accordingly
+  // --------------------------------------------------------------------
+
+  /* TODO move here when ready */
 
   // --------------------------------------------------------------------
   // PFA (1a) arbitration: apply track correction to clusters
@@ -147,5 +155,48 @@ void InitPlugin(JApplication* app) {
   app->Add(new JOmniFactoryGeneratorT<ChargedCandidateMaker_factory>(
       "EndcapPInsertChargedCandidateParticlesAlpha", {"EndcapPInsertTrackExpectedClusterMatches"},
       {"EndcapPInsertChargedCandidateParticlesAlpha"}, {}, app));
+
+  // --------------------------------------------------------------------
+  // PFA (2) arbitration: combine remnants, form neutral candidates
+  // --------------------------------------------------------------------
+
+  // backward -----------------------------------------------------------
+
+  /* TODO add PFA2 EEEMCal here */
+  /* TODO add PFA2 EHCal here */
+
+  // central ------------------------------------------------------------
+
+  /* TODO add PFA2 BEMC here */
+  /* TODO add PFA2 BHCal here */
+
+  // forward ------------------------------------------------------------
+
+  /* TODO add PFA2 FEMC here */
+  /* TODO add PFA2 LFHCAL here */
+  /* TODO add PFA2 FHCal insert here */
+
+  // --------------------------------------------------------------------
+  // PFA (3) regression: convert candidates to reco particles
+  // --------------------------------------------------------------------
+
+  // backward -----------------------------------------------------------
+
+  /* TODO add PFA3 EEEMCal here */
+  /* TODO add PFA3 EHCal here */
+
+  // central ------------------------------------------------------------
+
+  /* TODO add PFA3 BEMC here */
+  /* TODO add PFA3 BHCal here */
+
+  // forward ------------------------------------------------------------
+
+  /* TODO add PFA3 FEMC here */
+  /* TODO add PFA3 LFHCAL here */
+  /* TODO add PFA3 FHCal insert here */
+
+  /* TODO collect reconstructed particles here */
+
 }
 } // extern "C"
