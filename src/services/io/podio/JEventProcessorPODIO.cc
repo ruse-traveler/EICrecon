@@ -387,6 +387,7 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
       "HcalEndcapNTrackClusterMatches",
 
       // particle flow
+      /* TODO move PFA0 collections here when ready */
       "EcalBarrelRemnantClusters",
       "EcalBarrelExpectedClusters",
       "EcalBarrelTrackExpectedClusterMatches",
@@ -408,6 +409,8 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
       "HcalEndcapPInsertRemnantClusters",
       "HcalEndcapPInsertExpectedClusters",
       "HcalEndcapPInsertTrackExpectedClusterMatches",
+      /* TODO add PFA2 collections here */
+      /* TODO add PFA3 collections here */
   };
   std::vector<std::string> output_exclude_collections; // need to get as vector, then convert to set
   std::string output_include_collections = "DEPRECATED";
