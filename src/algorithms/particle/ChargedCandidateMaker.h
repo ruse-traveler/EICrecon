@@ -21,6 +21,7 @@ namespace eicrecon {
 // --------------------------------------------------------------------------
 //! Algorithm input/output
 // --------------------------------------------------------------------------
+<<<<<<< HEAD
 using ChargedCandidateMakerAlgorithm =
     algorithms::Algorithm<algorithms::Input<edm4eic::TrackClusterMatchCollection>,
                           algorithms::Output<edm4eic::ReconstructedParticleCollection>>;

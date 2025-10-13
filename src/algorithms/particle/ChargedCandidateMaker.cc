@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 
-#include "ChargedCandidateMaker.h"
+#include "algorithms/particle/ChargedCandidateMakerConfig.h"
 
 namespace eicrecon {
 
