@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "extensions/jana/JOmniFactoryGeneratorT.h"
+#include "factories/particle/TrackProtoClusterMatchPromoter_factory.h"
 
 extern "C" {
 
@@ -24,10 +25,29 @@ void InitPlugin(JApplication* app) {
   // ====================================================================
 
   // --------------------------------------------------------------------
-  // PFA (0) connection: split/merge clusters accordingly
+  // PFA (0a) connection: split/merge clusters accordingly
   // --------------------------------------------------------------------
 
   /* TODO move here when ready */
+
+  // --------------------------------------------------------------------
+  // PFA (0b) connection: promote protocluster matches to clusters
+  // --------------------------------------------------------------------
+
+  // backward -----------------------------------------------------------
+
+  app->Add(
+      new JOmniFactoryGeneratorT<TrackProtoClusterMatchPromoter_factory>(
+          "EcalEndcapNTrackSplitMergeClusterMatches",
+          {"EcalEndcapNTrackSplitMergeProtoClusterMatches",
+           "EcalEndcapNSplitMergeProtoClusters",
+           "EcalEndcapNSplitMergeClusters"},
+          {"EcanEndcapNTrackSplitMergeClusterMatches"},
+          {}, app));
+
+  // central ------------------------------------------------------------
+
+  // forward ------------------------------------------------------------
 
   // --------------------------------------------------------------------
   // PFA (1a) arbitration: apply track correction to clusters
