@@ -397,6 +397,7 @@ JEventProcessorPODIO::JEventProcessorPODIO() {
 
       // particle flow
       /* TODO move PFA0 collections here when ready */
+      "EcalEndcapNTrackSplitMergeClusterMatches",
       /* TODO add PFA1 collections here */
       /* TODO add PFA2 collections here */
       /* TODO add PFA3 collections here */

@@ -160,34 +160,25 @@ void InitPlugin(JApplication* app) {
 
   app->Add(new JOmniFactoryGeneratorT<TrackClusterMergeSplitter_factory>(
       "HcalBarrelSplitMergeProtoClusters",
-      {"HcalBarrelClustersWithoutShapes", "CalorimeterTrackProjections"},
+      {"HcalBarrelTrackClusterMatches", "HcalBarrelClustersWithoutShapes", "CalorimeterTrackProjections"},
       {
         "HcalBarrelSplitMergeProtoClusters",
-#if EDM4EIC_VERSION_MAJOR >= 8
-            "HcalBarrelTrackSplitMergeProtoClusterMatches"
+#if EDM4EIC_VERSION_MAJOR >= 8 && EDM4EIC_VERSION_MINOR >= 4
+        "HcalBarrelTrackSplitMergeProtoClusterMatches"
       },
 #endif
-      {.idCalo                       = "HcalBarrel_ID",
-       .minSigCut                    = -2.0,
+      {.minSigCut                    = -2.0,
        .avgEP                        = 0.50,
        .sigEP                        = 0.25,
        .drAdd                        = 0.40,
-       .sampFrac                     = 1.0,
+       .surfaceToUse                 = 1,
        .transverseEnergyProfileScale = 1.0},
       app // TODO: remove me once fixed
       ));
 
   app->Add(new JOmniFactoryGeneratorT<CalorimeterClusterRecoCoG_factory>(
       "HcalBarrelSplitMergeClustersWithoutShapes",
-      {
-        "HcalBarrelSplitMergeProtoClusters",
-#if EDM4EIC_VERSION_MAJOR >= 7
-            "HcalBarrelRawHitAssociations"
-      },
-#else
-                  "HcalBarrelHits"
-            },
-#endif
+      {"HcalBarrelSplitMergeProtoClusters", "HcalBarrelRawHitAssociations"},
       {"HcalBarrelSplitMergeClustersWithoutShapes",
        "HcalBarrelSplitMergeClusterAssociationsWithoutShapes"},
       {.energyWeight = "log", .sampFrac = 1.0, .logWeightBase = 6.2, .enableEtaBounds = false},

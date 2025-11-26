@@ -173,6 +173,8 @@ void InitPlugin(JApplication* app) {
   decltype(CalorimeterHitDigiConfig::resolutionTDC) LFHCAL_resolutionTDC = 10 * dd4hep::picosecond;
 
   app->Add(new JOmniFactoryGeneratorT<CalorimeterHitDigi_factory>(
+      "LFHCALRawHits", {"LFHCALHits"},
+      {"LFHCALRawHits", "LFHCALRawHitAssociations"},
       "LFHCALRawHits", {"EventHeader", "LFHCALHits"}, {"LFHCALRawHits", "LFHCALRawHitAssociations"},
       {
           .eRes          = {},
@@ -293,34 +295,25 @@ void InitPlugin(JApplication* app) {
       {.longitudinalShowerInfoAvailable = true, .energyWeight = "log", .logWeightBase = 4.5}, app));
 
   app->Add(new JOmniFactoryGeneratorT<TrackClusterMergeSplitter_factory>(
-      "LFHCALSplitMergeProtoClusters", {"LFHCALClusters", "CalorimeterTrackProjections"},
-      {
-        "LFHCALSplitMergeProtoClusters",
-#if EDM4EIC_VERSION_MAJOR >= 8
-            "LFHCALTrackSplitMergeProtoClusterMatches"
-      },
+      "LFHCALSplitMergeProtoClusters",
+      {"LFHCALTrackClusterMatches", "LFHCALClusters", "CalorimeterTrackProjections"},
+      {"LFHCALSplitMergeProtoClusters",
+#if EDM4EIC_VERSION_MAJOR >= 8 && EDM4EIC_VERSION_MINOR >= 4
+       "LFHCALTrackSplitMergeProtoClusterMatches"},
 #endif
-      {.idCalo                       = "LFHCAL_ID",
-       .minSigCut                    = -2.0,
+      {.minSigCut                    = -2.0,
        .avgEP                        = 0.50,
        .sigEP                        = 0.25,
        .drAdd                        = 0.30,
-       .sampFrac                     = 1.0,
+       .surfaceToUse                 = 1,
        .transverseEnergyProfileScale = 1.0},
       app // TODO: remove me once fixed
       ));
 
   app->Add(new JOmniFactoryGeneratorT<CalorimeterClusterRecoCoG_factory>(
       "LFHCALSplitMergeClustersWithoutShapes",
-      {
-        "LFHCALSplitMergeProtoClusters",
-#if EDM4EIC_VERSION_MAJOR >= 7
-            "LFHCALRawHitAssociations"
-      },
-#else
-                  "LFHCALHits"
-            },
-#endif
+      {"LFHCALSplitMergeProtoClusters",
+       "LFHCALRawHitAssociations"},
       {"LFHCALSplitMergeClustersWithoutShapes", "LFHCALSplitMergeClusterAssociationsWithoutShapes"},
       {
           .energyWeight    = "log",

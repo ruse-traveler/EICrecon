@@ -140,33 +140,26 @@ void InitPlugin(JApplication* app) {
       {"HcalEndcapNClusters", "HcalEndcapNClusterAssociations"},
       {.energyWeight = "log", .logWeightBase = 6.2}, app));
   app->Add(new JOmniFactoryGeneratorT<TrackClusterMergeSplitter_factory>(
-      "HcalEndcapNSplitMergeProtoClusters", {"HcalEndcapNClusters", "CalorimeterTrackProjections"},
+      "HcalEndcapNSplitMergeProtoClusters",
+      {"HcalEndcapNTrackClusterMatches", "HcalEndcapNClusters", "CalorimeterTrackProjections"},
       {
         "HcalEndcapNSplitMergeProtoClusters",
-#if EDM4EIC_VERSION_MAJOR >= 8
-            "HcalEndcapNTrackSplitMergeProtoClusterMatches"
+#if EDM4EIC_VERSION_MAJOR >= 8 && EDM4EIC_VERSION_MINOR >= 4
+        "HcalEndcapNTrackSplitMergeProtoClusterMatches"
       },
 #endif
-      {.idCalo                       = "HcalEndcapN_ID",
-       .minSigCut                    = -2.0,
+      {.minSigCut                    = -2.0,
        .avgEP                        = 0.60,
        .sigEP                        = 0.40,
        .drAdd                        = 0.40,
-       .sampFrac                     = 1.0,
+       .surfaceToUse                 = 1,
        .transverseEnergyProfileScale = 1.0},
       app // TODO: remove me once fixed
       ));
   app->Add(new JOmniFactoryGeneratorT<CalorimeterClusterRecoCoG_factory>(
       "HcalEndcapNClustersWithoutShapes",
-      {
-        "HcalEndcapNSplitMergeProtoClusters",
-#if EDM4EIC_VERSION_MAJOR >= 7
-            "HcalEndcapNRawHitAssociations"
-      },
-#else
-                  "HcalEndcapNHits"
-            },
-#endif
+      {"HcalEndcapNSplitMergeProtoClusters",
+       "HcalEndcapNRawHitAssociations"},
       {"HcalEndcapNSplitMergeClustersWithoutShapes",
        "HcalEndcapNSplitMergeClusterAssociationsWithoutShapes"},
       {
