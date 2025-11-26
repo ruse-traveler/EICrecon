@@ -160,8 +160,13 @@ void InitPlugin(JApplication* app) {
 
   app->Add(new JOmniFactoryGeneratorT<TrackClusterMergeSplitter_factory>(
       "HcalBarrelSplitMergeProtoClusters",
-      {"HcalBarrelIslandProtoClusters", "CalorimeterTrackProjections"},
-      {"HcalBarrelSplitMergeProtoClusters"},
+      {"HcalBarrelClustersWithoutShapes", "CalorimeterTrackProjections"},
+      {
+        "HcalBarrelSplitMergeProtoClusters",
+#if EDM4EIC_VERSION_MAJOR >= 8
+            "HcalBarrelTrackSplitMergeProtoClusterMatches"
+      },
+#endif
       {.idCalo                       = "HcalBarrel_ID",
        .minSigCut                    = -2.0,
        .avgEP                        = 0.50,
@@ -175,11 +180,16 @@ void InitPlugin(JApplication* app) {
   app->Add(new JOmniFactoryGeneratorT<CalorimeterClusterRecoCoG_factory>(
       "HcalBarrelSplitMergeClustersWithoutShapes",
       {
-          "HcalBarrelSplitMergeProtoClusters", // edm4eic::ProtoClusterCollection
-          "HcalBarrelRawHitAssociations"       // edm4eic::MCRecoCalorimeterHitAssociationCollection
+        "HcalBarrelSplitMergeProtoClusters",
+#if EDM4EIC_VERSION_MAJOR >= 7
+            "HcalBarrelRawHitAssociations"
       },
-      {"HcalBarrelSplitMergeClustersWithoutShapes",             // edm4eic::Cluster
-       "HcalBarrelSplitMergeClusterAssociationsWithoutShapes"}, // edm4eic::MCRecoClusterParticleAssociation
+#else
+                  "HcalBarrelHits"
+            },
+#endif
+      {"HcalBarrelSplitMergeClustersWithoutShapes",
+       "HcalBarrelSplitMergeClusterAssociationsWithoutShapes"},
       {.energyWeight = "log", .sampFrac = 1.0, .logWeightBase = 6.2, .enableEtaBounds = false},
       app // TODO: Remove me once fixed
       ));
@@ -188,6 +198,7 @@ void InitPlugin(JApplication* app) {
       "HcalBarrelSplitMergeClusters",
       {"HcalBarrelSplitMergeClustersWithoutShapes",
        "HcalBarrelSplitMergeClusterAssociationsWithoutShapes"},
-      {"HcalBarrelSplitMergeClusters", "HcalBarrelSplitMergeClusterAssociations"}, {}, app));
+      {"HcalBarrelSplitMergeClusters", "HcalBarrelSplitMergeClusterAssociations"},
+      {.energyWeight = "log", .logWeightBase = 6.2}, app));
 }
 }

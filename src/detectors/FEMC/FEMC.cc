@@ -203,9 +203,13 @@ void InitPlugin(JApplication* app) {
       {.energyWeight = "log", .logWeightBase = 3.6}, app));
 
   app->Add(new JOmniFactoryGeneratorT<TrackClusterMergeSplitter_factory>(
-      "EcalEndcapPSplitMergeProtoClusters",
-      {"EcalEndcapPIslandProtoClusters", "CalorimeterTrackProjections"},
-      {"EcalEndcapPSplitMergeProtoClusters"},
+      "EcalEndcapPSplitMergeProtoClusters", {"EcalEndcapPClusters", "CalorimeterTrackProjections"},
+      {
+        "EcalEndcapPSplitMergeProtoClusters",
+#if EDM4EIC_VERSION_MAJOR >= 8
+            "EcalEndcapPTrackSplitMergeProtoClusterMatches"
+      },
+#endif
       {.idCalo                       = "EcalEndcapP_ID",
        .minSigCut                    = -2.0,
        .avgEP                        = 1.0,
@@ -219,12 +223,22 @@ void InitPlugin(JApplication* app) {
   app->Add(new JOmniFactoryGeneratorT<CalorimeterClusterRecoCoG_factory>(
       "EcalEndcapPSplitMergeClustersWithoutShapes",
       {
-          "EcalEndcapPSplitMergeProtoClusters", // edm4eic::ProtoClusterCollection
-          "EcalEndcapPRawHitAssociations" // edm4hep::MCRecoCalorimeterHitAssociationCollection
+        "EcalEndcapPSplitMergeProtoClusters",
+#if EDM4EIC_VERSION_MAJOR >= 7
+            "EcalEndcapPRawHitAssociations"
       },
-      {"EcalEndcapPSplitMergeClustersWithoutShapes",             // edm4eic::Cluster
-       "EcalEndcapPSplitMergeClusterAssociationsWithoutShapes"}, // edm4eic::MCRecoClusterParticleAssociation
-      {.energyWeight = "log", .sampFrac = 1.0, .logWeightBase = 3.6, .enableEtaBounds = false},
+#else
+                  "EcalEndcapPHits"
+            },
+#endif
+      {"EcalEndcapPSplitMergeClustersWithoutShapes",
+       "EcalEndcapPSplitMergeClusterAssociationsWithoutShapes"},
+      {
+          .energyWeight    = "log",
+          .sampFrac        = 1.0,
+          .logWeightBase   = 3.6,
+          .enableEtaBounds = false,
+      },
       app // TODO: Remove me once fixed
       ));
 
