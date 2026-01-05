@@ -21,6 +21,7 @@
 #include "factories/calorimetry/CalorimeterTruthClustering_factory.h"
 #include "factories/calorimetry/TrackClusterMergeSplitter_factory.h"
 #include "factories/meta/ONNXInference_factory.h"
+#include "factories/particle/TrackProtoClusterMatchPromoter_factory.h"
 
 extern "C" {
 void InitPlugin(JApplication* app) {
@@ -221,5 +222,12 @@ void InitPlugin(JApplication* app) {
        "EcalEndcapNSplitMergeClusterAssociationsWithoutShapes"},
       {"EcalEndcapNSplitMergeClusters", "EcalEndcapNSplitMergeClusterAssociations"},
       {.energyWeight = "log", .logWeightBase = 3.6}, app));
+  app->Add(new JOmniFactoryGeneratorT<TrackProtoClusterMatchPromoter_factory>(
+      "EcalEndcapNTrackSplitMergeClusterMatches",
+      {"EcalEndcapNTrackSplitMergeProtoClusterMatches",
+       "EcalEndcapNSplitMergeProtoClusters",
+       "EcalEndcapNSplitMergeClusters"},
+      {"EcalEndcapNTrackSplitMergeClusterMatches"},
+      {}, app));
 }
 }

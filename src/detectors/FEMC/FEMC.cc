@@ -18,6 +18,7 @@
 #include "factories/calorimetry/CalorimeterIslandCluster_factory.h"
 #include "factories/calorimetry/CalorimeterTruthClustering_factory.h"
 #include "factories/calorimetry/TrackClusterMergeSplitter_factory.h"
+#include "factories/particle/TrackProtoClusterMatchPromoter_factory.h"
 
 extern "C" {
 void InitPlugin(JApplication* app) {
@@ -175,5 +176,13 @@ void InitPlugin(JApplication* app) {
        "EcalEndcapPSplitMergeClusterAssociationsWithoutShapes"},
       {"EcalEndcapPSplitMergeClusters", "EcalEndcapPSplitMergeClusterAssociations"},
       {.energyWeight = "log", .logWeightBase = 3.6}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackProtoClusterMatchPromoter_factory>(
+      "EcalEndcapPTrackSplitMergeClusterMatches",
+      {"EcalEndcapPTrackSplitMergeProtoClusterMatches",
+       "EcalEndcapPSplitMergeProtoClusters",
+       "EcalEndcapPSplitMergeClusters"},
+      {"EcalEndcapPTrackSplitMergeClusterMatches"},
+      {}, app));
 }
 }

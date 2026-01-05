@@ -22,6 +22,7 @@
 #include "factories/calorimetry/HEXPLIT_factory.h"
 #include "factories/calorimetry/ImagingTopoCluster_factory.h"
 #include "factories/calorimetry/TrackClusterMergeSplitter_factory.h"
+#include "factories/particle/TrackProtoClusterMatchPromoter_factory.h"
 
 extern "C" {
 void InitPlugin(JApplication* app) {
@@ -173,8 +174,6 @@ void InitPlugin(JApplication* app) {
   decltype(CalorimeterHitDigiConfig::resolutionTDC) LFHCAL_resolutionTDC = 10 * dd4hep::picosecond;
 
   app->Add(new JOmniFactoryGeneratorT<CalorimeterHitDigi_factory>(
-      "LFHCALRawHits", {"LFHCALHits"},
-      {"LFHCALRawHits", "LFHCALRawHitAssociations"},
       "LFHCALRawHits", {"EventHeader", "LFHCALHits"}, {"LFHCALRawHits", "LFHCALRawHitAssociations"},
       {
           .eRes          = {},
@@ -329,5 +328,13 @@ void InitPlugin(JApplication* app) {
       {"LFHCALSplitMergeClustersWithoutShapes", "LFHCALSplitMergeClusterAssociationsWithoutShapes"},
       {"LFHCALSplitMergeClusters", "LFHCALSplitMergeClusterAssociations"},
       {.longitudinalShowerInfoAvailable = true, .energyWeight = "log", .logWeightBase = 4.5}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackProtoClusterMatchPromoter_factory>(
+      "LFHCALTrackSplitMergeClusterMatches",
+      {"LFHCALTrackSplitMergeProtoClusterMatches",
+       "LFHCALSplitMergeProtoClusters",
+       "LFHCALSplitMergeClusters"},
+      {"LFHCALTrackSplitMergeClusterMatches"},
+      {}, app));
 }
 }

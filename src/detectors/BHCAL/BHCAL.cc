@@ -19,6 +19,7 @@
 #include "factories/calorimetry/CalorimeterIslandCluster_factory.h"
 #include "factories/calorimetry/CalorimeterTruthClustering_factory.h"
 #include "factories/calorimetry/TrackClusterMergeSplitter_factory.h"
+#include "factories/particle/TrackProtoClusterMatchPromoter_factory.h"
 
 extern "C" {
 
@@ -191,5 +192,13 @@ void InitPlugin(JApplication* app) {
        "HcalBarrelSplitMergeClusterAssociationsWithoutShapes"},
       {"HcalBarrelSplitMergeClusters", "HcalBarrelSplitMergeClusterAssociations"},
       {.energyWeight = "log", .logWeightBase = 6.2}, app));
+
+  app->Add(new JOmniFactoryGeneratorT<TrackProtoClusterMatchPromoter_factory>(
+      "HcalBarrelTrackSplitMergeClusterMatches",
+      {"HcalBarrelTrackSplitMergeProtoClusterMatches",
+       "HcalBarrelSplitMergeProtoClusters",
+       "HcalBarrelSplitMergeClusters"},
+      {"HcalBarrelTrackSplitMergeClusterMatches"},
+      {}, app));
 }
 }
